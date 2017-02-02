@@ -1,91 +1,75 @@
 package com.azhei.weatherapp;
-
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-    FloatingActionButton fab;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        final TextView sensorText = (TextView) findViewById(R.id.sensor);
+        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://192.168.0.13:1883", "androidSampleClient");
+        //final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://iot.eclipse.org:1883", "androidSampleClient");
+        mqttAndroidClient.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
+                Log.e("androidClient", "Connection Lost");
+                System.out.println("Connection was lost!");
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        TextView sensorText = (TextView) findViewById(R.id.sensor);
-        sensorText.setText("Temperature is whatever.");
-        sensorText.setOnClickListener(this);
+            }
 
-//        fab.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                Log.e("androidClient", "Message Arrived");
+                System.out.println("Message Arrived!: " + topic + ": " + new String(message.getPayload()));
+                sensorText.setText("Message Arrived!: " + topic + ": " + new String(message.getPayload()));
+            }
 
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+                Log.e("androidClient", "Delivery Complete");
+                System.out.println("Delivery Complete!");
+            }
+        });
 
-    }
+        try {
+            mqttAndroidClient.connect(null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    System.out.println("Connection Success!");
+                    try {
+                        System.out.println("Subscribing to zoggus_arduinoEsp");
+                        mqttAndroidClient.subscribe("zoggus_arduinoEsp", 0);
+                        System.out.println("Subscribed to zoggus_arduinoEsp");
+                        System.out.println("Publishing message..");
+                        mqttAndroidClient.publish("zoggus_arduinoEsp", new MqttMessage("Hello world!".getBytes()));
+                    } catch (MqttException ex) {
+                        ex.printStackTrace();
+                    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+                }
 
-    public void buttonClicked (View v){
-        switch (v.getId()){
-            case R.id.fab:
-                Log.e("button FAB", "WAS PRESSED!");
-                break;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        switch (id) {
-            case R.id.action_settings:
-                break;
-            case R.id.action_random:
-                break;
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    System.out.println("Connection Failure!");
+                    exception.printStackTrace();
+                }
+            });
+        } catch (MqttException ex) {
+            ex.printStackTrace();
         }
 
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(this, "You need Internet Connectivity!", Toast.LENGTH_SHORT);
     }
 }

@@ -28,3 +28,18 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
 }
+
+repositories {
+    maven {
+        url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+    }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.1-SNAPSHOT'
+    compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1-SNAPSHOT'
+}
