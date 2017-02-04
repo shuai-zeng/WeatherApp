@@ -13,9 +13,122 @@
     tools:context="com.azhei.weatherapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <!--<TextView-->
+        <!--android:id="@+id/sensor"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Say something?" />-->
+
+    <!-- Temperature data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/tempIcon"
+        android:src="@drawable/temperature"
+        android:layout_marginTop="10dp"/>
+
     <TextView
-        android:id="@+id/sensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Say something?" />
+        android:id="@+id/tempValue"
+        android:layout_toRightOf="@id/tempIcon"
+        android:layout_alignTop="@id/tempIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="-- °C" />
+
+    <!-- Humidity data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/humidityIcon"
+        android:src="@drawable/humidity"
+        android:layout_below="@id/tempIcon"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/humidityValue"
+        android:layout_toRightOf="@id/humidityIcon"
+        android:layout_alignTop="@id/humidityIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="-- %" />
+
+    <!-- Wind data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/windIcon"
+        android:src="@drawable/wind"
+        android:layout_below="@id/humidityIcon"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/windValue"
+        android:layout_toRightOf="@id/windIcon"
+        android:layout_alignTop="@id/windIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="-- m/s" />
+
+    <!-- Pressure data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/pressureIcon"
+        android:src="@drawable/pressure"
+        android:layout_below="@id/windIcon"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pressureValue"
+        android:layout_toRightOf="@id/pressureIcon"
+        android:layout_alignTop="@id/pressureIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="-- Pa" />
+
+    <!-- Rain data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/rainIcon"
+        android:src="@drawable/rain"
+        android:layout_below="@id/pressureIcon"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rainValue"
+        android:layout_toRightOf="@id/rainIcon"
+        android:layout_alignTop="@id/rainIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="-- unit" />
+
+    <!-- Light data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/lightIcon"
+        android:src="@drawable/sun"
+        android:layout_below="@id/rainIcon"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lightValue"
+        android:layout_toRightOf="@id/lightIcon"
+        android:layout_alignTop="@id/lightIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="-- lux" />
 </RelativeLayout>

@@ -18,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView sensorText = (TextView) findViewById(R.id.sensor);
-        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://192.168.0.13:1883", "androidSampleClient");
-        //final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://iot.eclipse.org:1883", "androidSampleClient");
+        final TextView tempText = (TextView) findViewById(R.id.tempValue);
+        // final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://192.168.0.13:1883", "androidSampleClient");
+        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://iot.eclipse.org:1883", "androidSampleClient");
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.e("androidClient", "Message Arrived");
                 System.out.println("Message Arrived!: " + topic + ": " + new String(message.getPayload()));
-                sensorText.setText("Message Arrived!: " + topic + ": " + new String(message.getPayload()));
+                tempText.setText("Message Arrived!: " + topic + ": " + new String(message.getPayload()));
             }
 
             @Override
