@@ -23,8 +23,27 @@
     <ImageView
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:id="@+id/connectionIcon"
+        android:src="@drawable/connection"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/connectionValue"
+        android:layout_toRightOf="@id/connectionIcon"
+        android:layout_alignTop="@id/connectionIcon"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="MQTT connection status" />
+
+    <!-- Temperature data -->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:id="@+id/tempIcon"
         android:src="@drawable/temperature"
+        android:layout_below="@id/connectionIcon"
         android:layout_marginTop="10dp"/>
 
     <TextView
