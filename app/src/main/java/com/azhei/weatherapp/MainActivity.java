@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         windText.setText("Wind speed is " + new String(message.getPayload()) +"m/s");
                         break;
                     case "zoggus/pressure" :
-                        pressureText.setText("Pressure is " + new String(message.getPayload()) + "hPa");
+                        pressureText.setText("Pressure is " + new String(message.getPayload()) + "Pa");
                         break;
                     case "zoggus/rain" :
                         rainText.setText("Rain level is " + new String(message.getPayload()));
